@@ -11,8 +11,8 @@
 set /p num_cores="Number of cores to use: "
 
 REM echo. Compiling editor...
-REM CALL scons -j %num_cores% platform=windows target=release_debug 
-
+REM CALL scons -j %num_cores% platform=windows target=release_debug use_mingw=yes
+REM echo Finished batch build!
 
 ::add use_static_cpp=yes for production build (https://github.com/godotengine/godot/pull/45679)
 
@@ -42,31 +42,31 @@ REM echo Compiling debug template...
 REM CALL scons -j %num_cores% platform=windows target=release_debug tools=no %batch_args%
 REM echo.	
  
-echo Compiling release template...
-CALL scons -j %num_cores% platform=windows target=release tools=no %batch_args%
-echo.
+REM echo Compiling release template...
+REM CALL scons -j %num_cores% platform=windows target=release tools=no %batch_args%
+REM echo.
 
-echo Compiling android debug template...
-echo.   - armv7
-CALL scons -j %num_cores% platform=android target=release_debug android_arch=armv7 %%batch_args%%
-echo.   - armv8
-CALL scons -j %num_cores% platform=android target=release_debug android_arch=arm64v8 %%batch_args%%
-echo.   - x86
-CALL scons -j %num_cores% platform=android target=release_debug android_arch=x86 %%batch_args%%
-echo.   - x86_64
-CALL scons -j %num_cores% platform=android target=release_debug android_arch=x86_64 %%batch_args%%
-cd platform/android/java
-CALL .\gradlew generateGodotTemplates
-cd ..
-cd ..
-cd ..
-echo.
+REM echo Compiling android debug template...
+REM echo.   - armv7
+REM CALL scons -j %num_cores% platform=android target=release_debug android_arch=armv7 %%batch_args%%
+REM echo.   - armv8
+REM CALL scons -j %num_cores% platform=android target=release_debug android_arch=arm64v8 %%batch_args%%
+REM echo.   - x86
+REM CALL scons -j %num_cores% platform=android target=release_debug android_arch=x86 %%batch_args%%
+REM echo.   - x86_64
+REM CALL scons -j %num_cores% platform=android target=release_debug android_arch=x86_64 %%batch_args%%
+REM cd platform/android/java
+REM CALL .\gradlew generateGodotTemplates
+REM cd ..
+REM cd ..
+REM cd ..
+REM echo.
 
 echo Compiling android release template...
 echo.   - armv7
-CALL scons -j %num_cores% platform=android target=release android_arch=armv7 %%batch_args%%
+CALL scons -j %num_cores% platform=android target=release use_static_cpp=yes android_arch=armv7 %%batch_args%%
 echo.   - armv8
-CALL scons -j %num_cores% platform=android target=release android_arch=arm64v8 %%batch_args%%
+CALL scons -j %num_cores% platform=android target=release use_static_cpp=yes android_arch=arm64v8 %%batch_args%% 
 echo.   - x86
 CALL scons -j %num_cores% platform=android target=release android_arch=x86 %%batch_args%%
 echo.   - x86_64
